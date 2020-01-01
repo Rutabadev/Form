@@ -1,28 +1,48 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
+    <router-view />
+    <nav>
+      <router-link to="/">Home</router-link>
+      <router-link to="/game">Game</router-link>
+      <router-link to="/highscores">Highscores</router-link>
       <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    </nav>
   </div>
 </template>
 
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+body {
+  margin: 0;
 }
 
-#nav {
-  padding: 30px;
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  min-height: 100vh;
+  color: white;
+  background-color: rgb(33, 38, 66);
+}
+
+nav {
+  display: flex;
+  justify-content: space-around;
+  background-color: rgb(63, 72, 121);
 
   a {
+    padding: 1em;
+    font-size: 1.4em;
     font-weight: bold;
-    color: #2c3e50;
+    color: white;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
 
     &.router-link-exact-active {
       color: #42b983;
