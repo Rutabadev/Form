@@ -11,6 +11,8 @@
 </template>
 
 <style lang="scss">
+$break-large: 1200px;
+
 body {
   margin: 0;
 }
@@ -46,6 +48,12 @@ nav {
 
     &.router-link-exact-active {
       color: #42b983;
+    }
+  }
+
+  @media screen and (max-width: $break-large) {
+    a {
+      padding: 0.5em;
     }
   }
 }
