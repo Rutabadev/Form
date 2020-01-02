@@ -3,7 +3,7 @@ node_js:
   - "10"
 install:
   - npm install firebase-tools -g
-  - npm install
+  - npm install --production
 script:
   - npm run build
 after_success:
