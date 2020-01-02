@@ -1,10 +1,10 @@
 language: node_js
 node_js:
   - "10"
-script:
+install:
+  - npm install firebase-tools -g
   - npm install
+script:
   - npm run build
-deploy:
-  provider: firebase
-  token:
-    secure: S5bRe6v6PHUDgdqWSLD5vJN/h2Hf4X9dfzMQrRkN1yfjHQA6grQ4+q0ZG7sFstYpugRcGp8cZq3fLmT/hgxVNpp6CpEd5HzwoJVRv5VG8QKxOE0UDoaBqzz3WmwW3ncC6dyXOHoL9nyj0oN7f3Nuxw3vQRts3sftAsUlqOmr5NkmV5fvSrFIocAAtec4WtNFvycWfmjd9EXlCYuACIX1r8y7JKEo1IcyjNu0GpExF4Ee/OKkMhmILuQl0IcWOY5fPRqOwRe4EKjWW6haSQIBKGrf5zQMgh0pVzRRyf9O+Nze8tiEMHub0AOq+4odQHSrfyM+Ws4pJQp2avHWvy29LtuWTX42WozIRNtZji4o/YKmXbg4KtQSkp88Xfjf6AWIK8MDI7tYnZyMeKpm6fNo6IcvWQ+7pUZ5P/QSEOAmVNMe10o3Q8qirc47rfHyN1bRgS8xp0LEa3yDlzaIrHVv7+qstheW8H0IBzEQfRf9INbHYnOacgvRLjvk3CXA/xehelowFRSNxf+bHN8OWqHmuaTbaqQOwtN0SRAUQObJ30uDUJSALHp6Lv9vtWxgcPwbiPImJfgLBMqndF4bpNIUigzZ7RRfdR2oDEpJhwqtyPBBGgXlI4PUekiQ3CHmK99LRhuNafG3xoE/PV5My4UcDVqrArB/X1Zk60W8NSSo1sE=
+after_success:
+  - firebase deploy --token $FIREBASE_TOKEN
