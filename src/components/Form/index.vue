@@ -1,29 +1,33 @@
 <template>
   <div class="form">
     <h2>Form</h2>
-    <form id="form" @submit="checkForm">
-      <div>
-        <label for="username">Username</label>
-        <input id="username" type="text" v-model="username" name="username" />
+    <form @submit="checkForm">
+      <div class="inputs">
+        <div>
+          <label for="username">Username</label>
+          <input id="username" type="text" v-model="username" name="username" />
+        </div>
+
+        <div>
+          <label for="password">Password</label>
+          <input id="password" type="text" v-model="password" name="password" />
+        </div>
+
+        <p>
+          <input type="submit" value="Submit" />
+        </p>
       </div>
 
-      <div>
-        <label for="password">Password</label>
-        <input id="password" type="text" v-model="password" name="password" />
+      <div class="rules">
+        <div v-if="errors.length">
+          <b>Please correct the following error(s):</b>
+          <ul>
+            <li v-for="error in errors" :key="error.id">{{error}}</li>
+          </ul>
+        </div>
       </div>
 
-      <p>
-        <input type="submit" value="Submit" />
-      </p>
-
-      <div v-if="errors.length">
-        <b>Please correct the following error(s):</b>
-        <ul>
-          <li v-for="error in errors" :key="error.id">{{error}}</li>
-        </ul>
-      </div>
-
-      <b v-if="success">Success!</b>
+      <b class="success" v-if="success">Success!</b>
     </form>
   </div>
 </template>
@@ -81,8 +85,37 @@ export default class Form extends Vue {
 
 <style lang="scss">
 .form {
-  ul {
-    list-style-type: none;
+  display: grid;
+  grid-template: auto 1fr / 1fr;
+
+  form {
+    display: grid;
+    grid-template: 1fr auto 4fr / repeat(6, 1fr);
+    grid-gap: 0 3em;
+
+    .inputs {
+      grid-area: 2 / 2;
+
+      & > div {
+        display: flex;
+        justify-content: space-between;
+        padding: .3em;
+      }
+    }
+
+    .rules {
+      grid-area: 2 / 4 / span 1 / span 2;
+      text-align: left;
+    }
+
+    .success {
+      grid-area: 2 / 4 / span 1 / span 2;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
   }
 }
 </style>

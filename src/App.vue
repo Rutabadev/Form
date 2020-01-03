@@ -21,19 +21,18 @@ body {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
   text-align: center;
+  display: grid;
+  grid-template: 1fr auto / 1fr;
   min-height: 100vh;
   color: white;
   background-color: rgb(33, 38, 66);
 }
 
 nav {
+  background-color: rgb(63, 72, 121);
   display: flex;
   justify-content: space-around;
-  background-color: rgb(63, 72, 121);
 
   a {
     padding: 1em;

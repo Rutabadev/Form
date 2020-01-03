@@ -15,3 +15,10 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+  .game {
+    display: grid;
+    grid-template: auto 1fr / 1fr
+  }
+</style>
