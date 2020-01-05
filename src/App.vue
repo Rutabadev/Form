@@ -11,7 +11,7 @@
 </template>
 
 <style lang="scss">
-$break-large: 1200px;
+@import "@/variables.scss";
 
 body {
   margin: 0;
@@ -30,7 +30,7 @@ body {
 }
 
 nav {
-  background-color: rgb(63, 72, 121);
+  background-color: $background;
   display: flex;
   justify-content: space-around;
 

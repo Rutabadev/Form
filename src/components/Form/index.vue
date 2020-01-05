@@ -3,14 +3,26 @@
     <h2>Form</h2>
     <form @submit="checkForm">
       <div class="inputs">
-        <div>
+        <div class="form-group">
+          <input
+            id="username"
+            type="text"
+            v-model="username"
+            name="username"
+            placeholder="Username"
+          />
           <label for="username">Username</label>
-          <input id="username" type="text" v-model="username" name="username" />
         </div>
 
-        <div>
+        <div class="form-group">
+          <input
+            id="password"
+            type="text"
+            v-model="password"
+            name="password"
+            placeholder="Password"
+          />
           <label for="password">Password</label>
-          <input id="password" type="text" v-model="password" name="password" />
         </div>
 
         <p>
@@ -84,6 +96,8 @@ export default class Form extends Vue {
 </script>
 
 <style lang="scss">
+@import "@/variables.scss";
+
 .form {
   display: grid;
   grid-template: auto 1fr / 1fr;
@@ -91,38 +105,84 @@ export default class Form extends Vue {
   form {
     display: grid;
     grid-template: 1fr / 1fr 1fr;
-    grid-gap: 0 3em;
+
+    & > div {
+      margin: 0 10%;
+    }
 
     .inputs {
-      grid-area: 1 / 1;
       overflow: hidden;
+      grid-area: 1 / 1;
 
       & > div {
         display: flex;
         justify-content: space-between;
-        padding: .3em;
       }
     }
 
     .rules {
-      grid-area: 1 / 2;
       text-align: left;
     }
 
-    .success {
+    .success,
+    .rules {
       grid-area: 1 / 2;
     }
 
-    ul {
-      list-style-type: none;
-      padding: 0;
+    .form-group {
+      position: relative;
+      padding: 15px 0 0;
+      margin-top: 10px;
+      width: 100%;
+
+      input {
+        font-family: inherit;
+        width: 100%;
+        border: 0;
+        border-bottom: 2px solid $gray;
+        outline: 0;
+        font-size: 1rem;
+        color: $white;
+        padding: 7px 0;
+        background: transparent;
+        transition: border-color 0.2s;
+
+        &::placeholder {
+          color: transparent;
+        }
+
+        &:placeholder-shown ~ label {
+          font-size: 1rem;
+          cursor: text;
+          top: 20px;
+        }
+
+        &:focus {
+          ~ label {
+            position: absolute;
+            top: 6px;
+            display: block;
+            transition: 0.2s;
+            font-size: .6rem;
+            color: $primary;
+          }
+          padding-bottom: 6px;
+          border-bottom: 2px solid teal;
+          border-width: 3px;
+          border-image: linear-gradient(to right, $primary, $secondary);
+          border-image-slice: 1;
+        }
+      }
+
+      label {
+        position: absolute;
+        top: 6px;
+        display: block;
+        transition: 0.2s;
+        font-size: .6rem;
+        color: $gray;
+      }
     }
   }
-}
-
-input {
-  border-radius: 1em;
-  box-shadow: 0 3px 7px rgba($color: #000000, $alpha: .3);
-  border: none;
 }
 </style>
