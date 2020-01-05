@@ -118,4 +118,10 @@ export default class Form extends Vue {
     }
   }
 }
+
+input {
+  border-radius: 1em;
+  box-shadow: 0 3px 7px rgba($color: #000000, $alpha: .3);
+  border: none;
+}
 </style>
