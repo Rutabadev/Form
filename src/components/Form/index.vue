@@ -90,11 +90,12 @@ export default class Form extends Vue {
 
   form {
     display: grid;
-    grid-template: 1fr auto 4fr / repeat(6, 1fr);
+    grid-template: 1fr / 1fr 1fr;
     grid-gap: 0 3em;
 
     .inputs {
-      grid-area: 2 / 2;
+      grid-area: 1 / 1;
+      overflow: hidden;
 
       & > div {
         display: flex;
@@ -104,12 +105,12 @@ export default class Form extends Vue {
     }
 
     .rules {
-      grid-area: 2 / 4 / span 1 / span 2;
+      grid-area: 1 / 2;
       text-align: left;
     }
 
     .success {
-      grid-area: 2 / 4 / span 1 / span 2;
+      grid-area: 1 / 2;
     }
 
     ul {

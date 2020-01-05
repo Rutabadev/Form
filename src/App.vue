@@ -36,7 +36,7 @@ nav {
 
   a {
     padding: 1em;
-    font-size: 1.4em;
+    font-size: 1.2em;
     font-weight: bold;
     color: white;
     text-decoration: none;
