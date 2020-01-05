@@ -20,7 +20,7 @@
 
       <div class="rules">
         <div v-if="errors.length">
-          <b>Please correct the following error(s):</b>
+          <b>Please correct the following error{{errors.length > 1 ? 's' : ''}}:</b>
           <ul>
             <li v-for="error in errors" :key="error.id">{{error}}</li>
           </ul>
