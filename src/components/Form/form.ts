@@ -1,15 +1,14 @@
 import { Component, Vue } from 'vue-property-decorator'
 
-class Validation {
-  constructor (
-    public valid: boolean,
-    public rule: number,
-    public error: string
-  ) {
-    this.valid = valid
-    this.rule = rule
-    this.error = error
-  }
+interface Validation {
+    valid: boolean,
+    rule: number,
+    error: string
+}
+
+interface Rule {
+  message: string,
+  check(pwd: string): boolean;
 }
 
 @Component({})
@@ -18,6 +17,16 @@ export default class Form extends Vue {
   private username: string = '';
   private password: string = '';
   private success: boolean = false;
+  private rules: Array<Rule> = [
+    {
+      message: 'Password length must be longer than 2',
+      check: (pwd) => pwd.length > 2
+    },
+    {
+      message: 'First character must be 7',
+      check: (pwd) => pwd[0] === '7'
+    }
+  ];
 
   checkForm (event: Event) {
     event.preventDefault()
@@ -39,9 +48,13 @@ export default class Form extends Vue {
   }
 
   validatePassword (pwd: string): Validation {
-    if (pwd[0] !== '7') {
-      return { valid: false, rule: 0, error: 'First character must be 7' }
+    for (let i = 0; i < this.rules.length; i++) {
+      if (!this.rules[i].check(pwd)) {
+        console.log("C'est pas bon là")
+        return { valid: false, rule: i + 3, error: this.rules[i].message }
+      }
     }
+
     this.success = true
     return { valid: true, rule: 0, error: '' }
   }
