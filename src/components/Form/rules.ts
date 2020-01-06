@@ -1,5 +1,5 @@
 interface Rule {
-  message: string,
+  message: string;
   check(pwd: string): boolean;
 }
 

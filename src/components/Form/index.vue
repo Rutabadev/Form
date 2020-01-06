@@ -34,7 +34,7 @@
         <div v-if="errors.length">
           <b>Please correct the following error{{errors.length > 1 ? 's' : ''}}:</b>
           <ul>
-            <li v-for="error in errors" :key="error.id">{{error}}</li>
+            <li v-for="error in errors" :key="error.id" v-bind:style="{ color: error.fixed ? 'green' : 'red' }">{{error.message}}</li>
           </ul>
         </div>
       </div>
