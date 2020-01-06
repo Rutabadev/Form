@@ -18,6 +18,14 @@ const rules: Array<Rule> = [
       const developperNames = ['etienne', 'étienne']
       return developperNames.some(name => pwd.toLowerCase().includes(name))
     }
+  },
+  {
+    message: 'Password must be less than 14 characters long',
+    check: (pwd) => pwd.length < 14
+  },
+  {
+    message: 'Password must contain $',
+    check: (pwd) => pwd.includes('$')
   }
 ]
 

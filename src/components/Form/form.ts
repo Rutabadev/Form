@@ -28,20 +28,19 @@ export default class Form extends Vue {
       this.errors.push('Password required')
     } else {
       let validation = this.validatePassword(this.password)
-      if (!validation.valid) {
-        this.errors.push(validation.error)
-      }
     }
   }
 
-  validatePassword (pwd: string): Validation {
+  validatePassword (pwd: string): void {
+    this.success = false
+
     for (let i = 0; i < this.rules.length; i++) {
       if (!this.rules[i].check(pwd)) {
-        return { valid: false, rule: i + 3, error: this.rules[i].message }
+        this.errors.push(this.rules[i].message)
+        return
       }
     }
 
     this.success = true
-    return { valid: true, rule: 0, error: '' }
   }
 }
