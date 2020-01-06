@@ -50,7 +50,6 @@ export default class Form extends Vue {
   validatePassword (pwd: string): Validation {
     for (let i = 0; i < this.rules.length; i++) {
       if (!this.rules[i].check(pwd)) {
-        console.log("C'est pas bon là")
         return { valid: false, rule: i + 3, error: this.rules[i].message }
       }
     }
