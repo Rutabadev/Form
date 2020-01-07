@@ -8,6 +8,10 @@
     display: grid;
     grid-template: 1fr / 1fr 1fr;
 
+    @media screen and (max-width: $break-large) {
+      grid-template: 1fr 1fr / 1fr;
+    }
+
     & > div {
       margin: 0 10%;
     }
@@ -24,11 +28,23 @@
 
     .rules {
       text-align: left;
+      ul {
+        display: flex;
+        flex-direction: column;
+
+        @media screen and (max-width: $break-large) {
+          flex-direction: column-reverse;
+        }
+      }
     }
 
     .success,
     .rules {
       grid-area: 1 / 2;
+
+      @media screen and (max-width: $break-large) {
+        grid-area: 2 / 1;
+      }
     }
 
     .form-group {
@@ -65,7 +81,7 @@
             top: 6px;
             display: block;
             transition: 0.2s;
-            font-size: .6rem;
+            font-size: 0.6rem;
             color: $primary;
           }
           padding-bottom: 6px;
@@ -81,7 +97,7 @@
         top: 6px;
         display: block;
         transition: 0.2s;
-        font-size: .6rem;
+        font-size: 0.6rem;
         color: $gray;
       }
     }

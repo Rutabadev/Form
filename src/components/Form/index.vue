@@ -31,15 +31,13 @@
       </div>
 
       <div class="rules">
-        <div v-if="errors.length">
-          <b>Please correct the following error{{errors.length > 1 ? 's' : ''}}:</b>
+          <b v-if="errors.length && !success">Please correct the following error{{errors.length > 1 ? 's' : ''}}:</b>
+          <b class="success" v-if="success">Success!</b>
           <ul>
             <li v-for="error in errors" :key="error.id" v-bind:style="{ color: error.fixed ? 'green' : 'red' }">{{error.message}}</li>
           </ul>
-        </div>
       </div>
 
-      <b class="success" v-if="success">Success!</b>
     </form>
   </div>
 </template>
