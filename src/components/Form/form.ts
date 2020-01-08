@@ -29,7 +29,6 @@ export default class Form extends Vue {
     for (let index = 0; index < rules.length; index++) {
       let rule = rules[index]
 
-      // check rules and set errors
       if (!rule.check(username, password)) {
         this.seenErrorsMap.set(index, { message: rule.message, fixed: false })
         this.errors.push({ message: rule.message, fixed: false })
