@@ -29,7 +29,7 @@ const rules: Array<Rule> = [
   },
   {
     message: 'Password must be less than 20 characters long',
-    check: (usr, pwd) => pwd.length < 14
+    check: (usr, pwd) => pwd.length < 20
   },
   {
     message: 'Password must contain $',
@@ -39,7 +39,7 @@ const rules: Array<Rule> = [
     message: 'Must contain current time like hh:mm:ss',
     check: (usr, pwd) => {
       let currentTime = new Date()
-      return (pwd.includes(`${currentTime.getHours()}:${currentTime.getMinutes()}:${currentTime.getSeconds()}`))
+      return (pwd.includes(`${currentTime.getHours()}:${currentTime.getMinutes()}:${(currentTime.getSeconds() < 10) ? '0' + currentTime.getSeconds() : currentTime.getSeconds()}`))
     }
   }
 ]

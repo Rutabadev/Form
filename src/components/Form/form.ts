@@ -10,7 +10,7 @@ interface FormError {
   filters: {
     date: function (value: Date) {
       if (!value) return ''
-      return `${value.getHours()}:${value.getMinutes()}:${value.getSeconds()}`
+      return `${value.getHours()}:${value.getMinutes()}:${(value.getSeconds() < 10) ? '0' + value.getSeconds() : value.getSeconds()}`
     }
   }
 })
