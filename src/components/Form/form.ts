@@ -16,6 +16,7 @@ export default class Form extends Vue {
   private success: boolean = false;
 
   checkForm (event: Event): void {
+    this.success = false
     this.errors = []
     event.preventDefault()
     this.validateForm(this.username, this.password)
@@ -29,7 +30,9 @@ export default class Form extends Vue {
 
     if (this.allErrorsFixed()) {
       let nextInvalidRuleIndex = rules.findIndex(rule => !rule.check(username, password))
-      this.errorsMemory.set(nextInvalidRuleIndex, { message: rules[nextInvalidRuleIndex].message, fixed: false })
+      if (nextInvalidRuleIndex !== -1) {
+        this.errorsMemory.set(nextInvalidRuleIndex, { message: rules[nextInvalidRuleIndex].message, fixed: false })
+      }
     }
 
     this.errors = Array.from(this.errorsMemory.values())
