@@ -6,7 +6,14 @@ interface FormError {
   fixed: boolean;
 }
 
-@Component({})
+@Component({
+  filters: {
+    date: function (value: Date) {
+      if (!value) return ''
+      return `${value.getHours()}:${value.getMinutes()}:${value.getSeconds()}`
+    }
+  }
+})
 export default class Form extends Vue {
   private errors: Array<FormError> = [];
   private errorsMemory: Map<number, FormError> = new Map();
@@ -14,6 +21,20 @@ export default class Form extends Vue {
   private password: string = '';
   private rules: Array<Rule> = rules;
   private success: boolean = false;
+  private time: Date = new Date();
+  private updateClockInterval: number = 0;
+
+  mounted () {
+    this.updateClockInterval = setInterval(this.updateTime, 1000)
+  }
+
+  beforeDestroy () {
+    clearInterval(this.updateClockInterval)
+  }
+
+  updateTime () {
+    this.time = new Date()
+  }
 
   checkForm (event: Event): void {
     this.success = false

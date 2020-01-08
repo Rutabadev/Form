@@ -1,6 +1,11 @@
 <template>
   <div class="form">
     <h2>Form</h2>
+    <div class="time">
+      <p>
+        {{ time | date }}
+      </p>
+    </div>
     <form @submit="checkForm">
       <div class="inputs">
         <div class="form-group">
