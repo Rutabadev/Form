@@ -28,12 +28,30 @@
 
     .rules {
       text-align: left;
+      overflow: hidden;
+
       ul {
         display: flex;
         flex-direction: column;
 
         @media screen and (max-width: $break-large) {
           flex-direction: column-reverse;
+        }
+
+        li {
+          transition: all .5s ease;
+          animation: .5s ease-out 0s 1 appear;
+        }
+
+        @keyframes appear {
+          from {
+            transform: translateX(100px);
+            opacity: 0;
+          }
+          to {
+            transform: translateX(0);
+            opacity: 1;
+          }
         }
       }
     }

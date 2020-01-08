@@ -37,9 +37,9 @@ export default class Form extends Vue {
   }
 
   checkForm (event: Event): void {
+    event.preventDefault()
     this.success = false
     this.errors = []
-    event.preventDefault()
     this.validateForm(this.username, this.password)
   }
 
