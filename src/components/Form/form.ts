@@ -8,49 +8,36 @@ interface FormError {
 
 @Component({})
 export default class Form extends Vue {
-  private seenErrorsMap: Map<number, FormError> = new Map();
   private errors: Array<FormError> = [];
-  private errorsShowable: number = 1;
+  private errorsMemory: Map<number, FormError> = new Map();
   private username: string = '';
   private password: string = '';
-  private success: boolean = false;
   private rules: Array<Rule> = rules;
+  private success: boolean = false;
 
   checkForm (event: Event): void {
-    event.preventDefault()
     this.errors = []
+    event.preventDefault()
     this.validateForm(this.username, this.password)
-    if (this.allErrorsAreFixed()) {
-      this.success = true
-    }
   }
 
   validateForm (username: string, password: string): void {
-    for (let index = 0; index < rules.length; index++) {
-      let rule = rules[index]
+    Array.from(this.errorsMemory.keys()).forEach(key => {
+      let rule = rules[key]
+      this.errorsMemory.set(key, { message: rule.message, fixed: rule.check(username, password) })
+    })
 
-      if (!rule.check(username, password)) {
-        this.seenErrorsMap.set(index, { message: rule.message, fixed: false })
-        this.errors.push({ message: rule.message, fixed: false })
-      } else {
-        let seenError = this.seenErrorsMap.get(index)
-        if (seenError) {
-          this.seenErrorsMap.set(index, { message: rule.message, fixed: true })
-          this.errors.push({ message: rule.message, fixed: true })
-        }
-      }
-
-      if (this.errors.length === this.errorsShowable) {
-        if (this.allErrorsAreFixed()) {
-          this.errorsShowable++
-        } else {
-          return
-        }
-      }
+    if (this.allErrorsFixed()) {
+      let nextInvalidRuleIndex = rules.findIndex(rule => !rule.check(username, password))
+      this.errorsMemory.set(nextInvalidRuleIndex, { message: rules[nextInvalidRuleIndex].message, fixed: false })
     }
+
+    this.errors = Array.from(this.errorsMemory.values())
+
+    if (this.allErrorsFixed()) this.success = true
   }
 
-  private allErrorsAreFixed () {
-    return this.errors.reduce((a, b) => a && b.fixed, true)
+  allErrorsFixed () {
+    return Array.from(this.errorsMemory.values()).reduce((a, b) => a && b.fixed, true)
   }
 }
