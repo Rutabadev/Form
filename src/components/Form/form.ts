@@ -4,59 +4,54 @@ import { Rule, rules } from './rules'
 interface FormError {
   message: string;
   fixed: boolean;
-  id: number;
 }
 
 @Component({})
 export default class Form extends Vue {
+  private seenErrorsMap: Map<number, FormError> = new Map();
   private errors: Array<FormError> = [];
+  private errorsShowable: number = 1;
   private username: string = '';
   private password: string = '';
   private success: boolean = false;
   private rules: Array<Rule> = rules;
-  private seenErrors: Array<number> = [];
 
-  checkForm (event: Event) {
+  checkForm (event: Event): void {
     event.preventDefault()
-
     this.errors = []
-
-    if (!this.username) {
-      this.errors.push({ message: 'Username required', fixed: false, id: -2 })
-      this.seenErrors.push(-2)
-    } else {
-      if (this.seenErrors.includes(-2)) {
-        this.errors.push({ message: 'Username required', fixed: true, id: -2 })
-      }
-    }
-
-    if (!this.password) {
-      this.errors.push({ message: 'Password required', fixed: false, id: -1 })
-      this.seenErrors.push(-1)
-    } else {
-      if (this.seenErrors.includes(-1)) {
-        this.errors.push({ message: 'Password required', fixed: true, id: -1 })
-      }
-      this.validatePassword(this.password)
+    this.validateForm(this.username, this.password)
+    if (this.allErrorsAreFixed()) {
+      this.success = true
     }
   }
 
-  validatePassword (pwd: string): void {
-    this.success = false
+  validateForm (username: string, password: string): void {
+    for (let index = 0; index < rules.length; index++) {
+      let rule = rules[index]
 
-    for (let i = 0; i < this.rules.length; i++) {
-      if (this.rules[i].check(pwd)) {
-        if (this.seenErrors.includes(i)) {
-          this.errors.push({ message: this.rules[i].message, fixed: true, id: i })
+      // check rules and set errors
+      if (!rule.check(username, password)) {
+        this.seenErrorsMap.set(index, { message: rule.message, fixed: false })
+        this.errors.push({ message: rule.message, fixed: false })
+      } else {
+        let seenError = this.seenErrorsMap.get(index)
+        if (seenError) {
+          this.seenErrorsMap.set(index, { message: rule.message, fixed: true })
+          this.errors.push({ message: rule.message, fixed: true })
         }
       }
-      if (!this.rules[i].check(pwd)) {
-        this.errors.push({ message: this.rules[i].message, fixed: false, id: i })
-        this.seenErrors.push(i)
-        return
+
+      if (this.errors.length === this.errorsShowable) {
+        if (this.allErrorsAreFixed()) {
+          this.errorsShowable++
+        } else {
+          return
+        }
       }
     }
+  }
 
-    this.success = true
+  private allErrorsAreFixed () {
+    return this.errors.reduce((a, b) => a && b.fixed, true)
   }
 }
