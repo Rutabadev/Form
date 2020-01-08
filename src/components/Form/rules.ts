@@ -23,7 +23,7 @@ const rules: Array<Rule> = [
   {
     message: 'Password must contain developper\'s name',
     check: (usr, pwd) => {
-      const developperNames = ['etienne', 'étienne']
+      const developperNames = ['etienne', 'étienne', 'raby']
       return developperNames.some(name => pwd.toLowerCase().includes(name))
     }
   },
