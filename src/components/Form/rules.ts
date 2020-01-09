@@ -41,6 +41,14 @@ const rules: Array<Rule> = [
       let currentTime = new Date()
       return (pwd.includes(`${currentTime.getHours()}:${currentTime.getMinutes()}:${(currentTime.getSeconds() < 10) ? '0' + currentTime.getSeconds() : currentTime.getSeconds()}`))
     }
+  },
+  {
+    message: 'Username and password must be the same',
+    check: (usr, pwd) => usr === pwd
+  },
+  {
+    message: 'Username must be all capital letters',
+    check: (usr, pwd) => usr === usr.toUpperCase()
   }
 ]
 
