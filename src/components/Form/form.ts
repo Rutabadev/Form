@@ -27,6 +27,7 @@ export default class Form extends Vue {
   mounted () {
     this.updateClockInterval = setInterval(this.updateTime, 1000)
     this.rules = this.shuffle(rules)
+    this.rules.length = 8
   }
 
   beforeDestroy () {
