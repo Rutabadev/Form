@@ -39,7 +39,10 @@ const rules: Array<Rule> = [
     message: 'Must contain current time like hh:mm:ss',
     check: (usr, pwd) => {
       let currentTime = new Date()
-      return (pwd.includes(`${currentTime.getHours()}:${currentTime.getMinutes()}:${(currentTime.getSeconds() < 10) ? '0' + currentTime.getSeconds() : currentTime.getSeconds()}`))
+      let hours = (currentTime.getHours() < 10) ? '0' + currentTime.getHours() : currentTime.getHours()
+      let minutes = (currentTime.getMinutes() < 10) ? '0' + currentTime.getMinutes() : currentTime.getMinutes()
+      let seconds = (currentTime.getSeconds() < 10) ? '0' + currentTime.getSeconds() : currentTime.getSeconds()
+      return (pwd.includes(`${hours}:${minutes}:${seconds}`))
     }
   },
   {

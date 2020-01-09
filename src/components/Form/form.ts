@@ -1,5 +1,6 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { Rule, rules } from './rules'
+import Clock from '@/components/Clock/Clock.vue'
 
 interface FormError {
   message: string;
@@ -7,11 +8,8 @@ interface FormError {
 }
 
 @Component({
-  filters: {
-    date: function (value: Date) {
-      if (!value) return ''
-      return `${value.getHours()}:${value.getMinutes()}:${(value.getSeconds() < 10) ? '0' + value.getSeconds() : value.getSeconds()}`
-    }
+  components: {
+    Clock
   }
 })
 export default class Form extends Vue {
@@ -21,21 +19,10 @@ export default class Form extends Vue {
   private password: string = '';
   private rules: Array<Rule> = rules;
   private success: boolean = false;
-  private time: Date = new Date();
-  private updateClockInterval: number = 0;
 
   mounted () {
-    this.updateClockInterval = setInterval(this.updateTime, 1000)
     this.rules = this.shuffle(rules)
     this.rules.length = 8
-  }
-
-  beforeDestroy () {
-    clearInterval(this.updateClockInterval)
-  }
-
-  updateTime () {
-    this.time = new Date()
   }
 
   checkForm (event: Event): void {
