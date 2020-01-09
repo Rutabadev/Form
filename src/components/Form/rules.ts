@@ -13,8 +13,8 @@ const rules: Array<Rule> = [
     check: (usr, pwd) => pwd !== ''
   },
   {
-    message: 'Password length must be longer than 2',
-    check: (usr, pwd) => pwd.length > 2
+    message: 'Password length must be longer than 18',
+    check: (usr, pwd) => pwd.length > 18
   },
   {
     message: 'First character must be 7',
