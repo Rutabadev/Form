@@ -26,6 +26,7 @@ export default class Form extends Vue {
 
   mounted () {
     this.updateClockInterval = setInterval(this.updateTime, 1000)
+    this.rules = this.shuffle(rules)
   }
 
   beforeDestroy () {
@@ -63,5 +64,13 @@ export default class Form extends Vue {
 
   allErrorsFixed () {
     return Array.from(this.errorsMemory.values()).reduce((a, b) => a && b.fixed, true)
+  }
+
+  shuffle (a: Array<any>) {
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]]
+    }
+    return a
   }
 }
