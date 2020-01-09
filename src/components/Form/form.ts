@@ -58,7 +58,7 @@ export default class Form extends Vue {
 
     this.errors = Array.from(this.errorsMemory.values())
 
-    if (this.allErrorsFixed()) this.success = true
+    this.success = this.allErrorsFixed()
   }
 
   allErrorsFixed () {
