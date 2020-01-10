@@ -17,7 +17,7 @@ const rules: Array<Rule> = [
     check: (usr, pwd) => pwd.length > 18
   },
   {
-    message: 'First character must be 7',
+    message: 'Password first character must be 7',
     check: (usr, pwd) => pwd[0] === '7'
   },
   {
@@ -36,7 +36,7 @@ const rules: Array<Rule> = [
     check: (usr, pwd) => pwd.includes('$')
   },
   {
-    message: 'Must contain current time like hh:mm:ss',
+    message: 'Password must contain current time like hh:mm:ss',
     check: (usr, pwd) => {
       let currentTime = new Date()
       let hours = (currentTime.getHours() < 10) ? '0' + currentTime.getHours() : currentTime.getHours()
