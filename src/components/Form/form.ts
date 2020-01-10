@@ -39,7 +39,7 @@ export default class Form extends Vue {
     })
 
     if (this.allErrorsFixed()) {
-      let nextInvalidRuleIndex = rules.findIndex(rule => !rule.check(username, password))
+      let nextInvalidRuleIndex = this.rules.findIndex(rule => !rule.check(username, password))
       if (nextInvalidRuleIndex !== -1) {
         this.errorsMemory.set(nextInvalidRuleIndex, { message: rules[nextInvalidRuleIndex].message, fixed: false })
       }
