@@ -38,11 +38,23 @@ const rules: Array<Rule> = [
   {
     message: 'Password must contain current time like hh:mm:ss',
     check: (usr, pwd) => {
-      let currentTime = new Date()
-      let hours = (currentTime.getHours() < 10) ? '0' + currentTime.getHours() : currentTime.getHours()
-      let minutes = (currentTime.getMinutes() < 10) ? '0' + currentTime.getMinutes() : currentTime.getMinutes()
-      let seconds = (currentTime.getSeconds() < 10) ? '0' + currentTime.getSeconds() : currentTime.getSeconds()
-      return (pwd.includes(`${hours}:${minutes}:${seconds}`))
+      let regex = new RegExp(/..:..:../)
+      let matches = pwd.match(regex)
+      if (!matches || matches.length < 1) return false
+
+      let validStrings: Array<string> = []
+      let t = Date.now()
+      let validTimeStamps = [
+        t - 2000,
+        t - 1000,
+        t,
+        t + 1000
+      ]
+      validTimeStamps.forEach(timestamp => {
+        validStrings.push(new Date(timestamp).toTimeString().slice(0, 8))
+      })
+
+      return validStrings.some(string => pwd.includes(string))
     }
   },
   {
