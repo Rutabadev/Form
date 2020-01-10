@@ -31,10 +31,7 @@ const rules: Array<Rule> = [
     message: 'Password must be less than 20 characters long',
     check: (usr, pwd) => pwd.length < 20
   },
-  {
-    message: 'Password must contain $',
-    check: (usr, pwd) => pwd.includes('$')
-  },
+  randomChar(),
   {
     message: 'Password must contain current time like hh:mm:ss',
     check: (usr, pwd) => {
@@ -66,5 +63,14 @@ const rules: Array<Rule> = [
     check: (usr, pwd) => usr === usr.toUpperCase()
   }
 ]
+
+function randomChar (): Rule {
+  let chars = ['$', 'µ', '%', '*', 'É', '♥']
+  let char = chars[Math.round(Math.random() * 5)]
+  return {
+    message: `Password must include ${char}`,
+    check: (usr, pwd) => pwd.includes(char)
+  }
+}
 
 export { Rule, rules }
