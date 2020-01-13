@@ -8,6 +8,24 @@ interface FormError {
 }
 
 @Component({
+  filters: {
+    time: function (value: number) {
+      if (!value) return ''
+      let seconds = Math.round(value / 1000)
+      if (seconds < 60) {
+        return `${seconds}s`
+      }
+      if (seconds < 3600) {
+        let minutes = Math.round(seconds / 60)
+        seconds = seconds % 60
+        return `${minutes}m${seconds}s`
+      }
+      let hours = Math.round(seconds / 3600)
+      let minutes = Math.round((seconds % 3600) / 60)
+      seconds = seconds % 60
+      return `${hours}h${minutes}m${seconds}s`
+    }
+  },
   components: {
     Clock
   }
@@ -19,10 +37,25 @@ export default class Form extends Vue {
   private password: string = '';
   private rules: Array<Rule> = rules;
   private success: boolean = false;
+  private startTime: number = 0;
+  private endTime: number = 0;
+  private elapsedTime: number = 0;
+  private updateGameTimeInterval: number = 0;
 
   mounted () {
     this.rules = this.shuffle(rules)
     this.rules.length = 8
+    this.startTime = Date.now()
+    this.updateGameTimeInterval = setInterval(this.updateGameTime, 1000)
+  }
+
+  beforeDestroy () {
+    clearInterval(this.updateGameTimeInterval)
+  }
+
+  updateGameTime () {
+    this.endTime = Date.now()
+    this.elapsedTime = this.endTime - this.startTime
   }
 
   checkForm (event: Event): void {
@@ -48,6 +81,7 @@ export default class Form extends Vue {
     this.errors = Array.from(this.errorsMemory.values())
 
     this.success = this.allErrorsFixed()
+    if (this.success) clearInterval(this.updateGameTimeInterval)
   }
 
   allErrorsFixed () {

@@ -1,7 +1,10 @@
 <template>
   <div class="form">
     <h2>Form</h2>
-    <Clock/>
+    <div class="timers">
+      <Clock/>
+      <p>Elapsed time: {{ elapsedTime | time }}</p>
+    </div>
     <form @submit="checkForm">
       <div class="inputs">
         <div class="form-group">
@@ -32,13 +35,18 @@
       </div>
 
       <div class="rules">
-          <b v-if="errors.length && !success">Please correct the following error{{errors.length > 1 ? 's' : ''}}:</b>
-          <b class="success" v-if="success">Success!</b>
-          <ul>
-            <li v-for="error in errors" :key="error.id" v-bind:style="{ color: error.fixed ? 'green' : 'red' }">{{error.message}}</li>
-          </ul>
+        <b
+          v-if="errors.length && !success"
+        >Please correct the following error{{errors.length > 1 ? 's' : ''}}:</b>
+        <b class="success" v-if="success">Success!</b>
+        <ul>
+          <li
+            v-for="error in errors"
+            :key="error.id"
+            v-bind:style="{ color: error.fixed ? 'green' : 'red' }"
+          >{{error.message}}</li>
+        </ul>
       </div>
-
     </form>
   </div>
 </template>
