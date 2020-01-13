@@ -10,7 +10,7 @@ interface FormError {
 @Component({
   filters: {
     time: function (value: number) {
-      if (!value) return ''
+      if (!value) return '0s'
       let seconds = Math.round(value / 1000)
       if (seconds < 60) {
         return `${seconds}s`
