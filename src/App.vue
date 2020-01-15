@@ -25,7 +25,7 @@ body {
   grid-template: 1fr auto / 1fr;
   min-height: 100vh;
   color: white;
-  background-color: rgb(33, 38, 66);
+  background-color: $background-dark;
 }
 
 nav {
@@ -34,6 +34,7 @@ nav {
   justify-content: space-around;
 
   a {
+    flex: 1 1 auto;
     padding: 1em;
     font-size: 1.2em;
     font-weight: bold;
@@ -41,7 +42,7 @@ nav {
     text-decoration: none;
 
     &:hover {
-      text-decoration: underline;
+      background-color: $background-light;
     }
 
     &.router-link-exact-active {
