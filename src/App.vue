@@ -1,6 +1,11 @@
 <template>
   <div id="app">
     <router-view />
+    <div>
+      <button class="google-login">
+        Login with Google
+      </button>
+    </div>
     <nav>
       <router-link to="/">Game</router-link>
       <router-link to="/highscores">Highscores</router-link>
@@ -22,10 +27,29 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   display: grid;
-  grid-template: 1fr auto / 1fr;
+  grid-template: 1fr auto auto / 1fr;
   min-height: 100vh;
   color: white;
   background-color: $background-dark;
+}
+
+.google-login {
+  padding: .5rem 1rem;
+  margin: 2rem;
+  border: none;
+  border-radius: 1rem;
+  outline: none;
+  color: white;
+  background-color: red;
+
+  &:hover {
+    filter: brightness(.7);
+    box-shadow: 0 3px 10px black;
+  }
+
+  &:active {
+    box-shadow: 0 1px 3px black;
+  }
 }
 
 nav {
