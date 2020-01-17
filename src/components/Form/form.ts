@@ -81,11 +81,11 @@ export default class Form extends Vue {
     this.errors = Array.from(this.errorsMemory.values())
 
     if (this.allErrorsFixed()) {
-      this.handleSucess()
+      this.handleSuccess()
     }
   }
 
-  handleSucess () {
+  handleSuccess () {
     this.success = true
     clearInterval(this.updateGameTimeInterval)
   }
