@@ -2,8 +2,8 @@
   <div id="app">
     <router-view />
     <div>
-      <button class="google-login">
-        Login with Google
+      <button @click="login" class="google-login">
+        {{ !user ? 'Login with Google' : user.displayName }}
       </button>
     </div>
     <nav>
@@ -13,6 +13,45 @@
     </nav>
   </div>
 </template>
+
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator'
+import firebase from 'firebase'
+
+@Component
+export default class App extends Vue {
+  private user: firebase.User | null = null;
+  mounted () {
+    const firebaseConfig = {
+      apiKey: 'AIzaSyDcEqFaxz969Ve5inMbfRI7qodcZPD6hVo',
+      authDomain: 'form-79a24.firebaseapp.com',
+      databaseURL: 'https://form-79a24.firebaseio.com',
+      projectId: 'form-79a24',
+      storageBucket: 'form-79a24.appspot.com',
+      messagingSenderId: '201666686554',
+      appId: '1:201666686554:web:2f1a246b66c4e9104ab263',
+      measurementId: 'G-PHD843ZHNF'
+    }
+
+    firebase.initializeApp(firebaseConfig)
+
+    firebase.auth().onAuthStateChanged(user => {
+      this.user = user
+    })
+  }
+
+  login () {
+    if (!this.user) {
+      const provider = new firebase.auth.GoogleAuthProvider()
+      firebase.auth().signInWithPopup(provider)
+    } else {
+      firebase.auth().signOut().then(() => {
+        this.user = null
+      })
+    }
+  }
+}
+</script>
 
 <style lang="scss">
 @import "@/variables.scss";
