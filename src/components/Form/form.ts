@@ -41,6 +41,12 @@ export default class Form extends Vue {
   private endTime: number = 0;
   private elapsedTime: number = 0;
   private updateGameTimeInterval: number = 0;
+  get firebase () {
+    return this.$store.state.firebase
+  }
+  get user () {
+    return this.$store.state.user
+  }
 
   mounted () {
     this.rules = this.shuffle(rules)
@@ -88,6 +94,11 @@ export default class Form extends Vue {
   handleSuccess () {
     this.success = true
     clearInterval(this.updateGameTimeInterval)
+    const db = this.firebase.firestore()
+    db.collection('highscores').doc().set({
+      user: this.user.uid,
+      time: this.elapsedTime
+    })
   }
 
   allErrorsFixed () {

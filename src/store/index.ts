@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    firebase: null,
     user: null
   },
   mutations: {
@@ -13,6 +14,9 @@ export default new Vuex.Store({
     },
     removeUser (state) {
       state.user = null
+    },
+    setFirebase (state, firebase) {
+      state.firebase = firebase
     }
   },
   actions: {
@@ -21,6 +25,9 @@ export default new Vuex.Store({
     },
     removeUser ({ commit }) {
       commit('removeUser')
+    },
+    setFirebase ({ commit }, firebase) {
+      commit('setFirebase', firebase)
     }
   },
   modules: {
