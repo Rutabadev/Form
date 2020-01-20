@@ -3,7 +3,7 @@
     <router-view />
     <div>
       <button @click="login" class="google-login">
-        {{ !user ? 'Login with Google' : user.displayName }}
+        {{ !this.user ? 'Login with Google' : this.user.displayName }}
       </button>
     </div>
     <nav>
@@ -17,11 +17,17 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import firebase from 'firebase'
+import store from '@/store'
 
 @Component
 export default class App extends Vue {
-  private user: firebase.User | null = null;
+  get user () {
+    return this.$store.state.user
+  }
+
   mounted () {
+    console.log(this.user)
+
     const firebaseConfig = {
       apiKey: 'AIzaSyDcEqFaxz969Ve5inMbfRI7qodcZPD6hVo',
       authDomain: 'form-79a24.firebaseapp.com',
@@ -36,17 +42,19 @@ export default class App extends Vue {
     firebase.initializeApp(firebaseConfig)
 
     firebase.auth().onAuthStateChanged(user => {
-      this.user = user
+      this.$store.dispatch('setUser', user)
     })
+
+    console.log(this.user)
   }
 
   login () {
-    if (!this.user) {
+    if (!this.$store.state.user) {
       const provider = new firebase.auth.GoogleAuthProvider()
       firebase.auth().signInWithPopup(provider)
     } else {
       firebase.auth().signOut().then(() => {
-        this.user = null
+        this.$store.dispatch('removeUser')
       })
     }
   }
