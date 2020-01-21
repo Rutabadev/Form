@@ -21,19 +21,19 @@ import { Component, Vue } from 'vue-property-decorator'
   }
 })
 export default class Clock extends Vue {
-    private time: Date = new Date();
-    private updateClockInterval: number = 0;
+  private time: Date = new Date();
+  private updateClockInterval: number = 0;
 
-    mounted () {
-      this.updateClockInterval = setInterval(this.updateTime, 1000)
-    }
+  mounted () {
+    this.updateClockInterval = setInterval(this.updateTime, 1000)
+  }
 
-    beforeDestroy () {
-      clearInterval(this.updateClockInterval)
-    }
+  beforeDestroy () {
+    clearInterval(this.updateClockInterval)
+  }
 
-    updateTime () {
-      this.time = new Date()
-    }
+  updateTime () {
+    this.time = new Date()
+  }
 }
 </script>
