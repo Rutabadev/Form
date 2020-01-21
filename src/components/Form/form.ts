@@ -1,6 +1,6 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { Rule, rules } from './rules'
-import Clock from '@/components/Clock/Clock.vue'
+import Clock from '@/components/Clock.vue'
 
 interface FormError {
   message: string;
@@ -94,11 +94,16 @@ export default class Form extends Vue {
   handleSuccess () {
     this.success = true
     clearInterval(this.updateGameTimeInterval)
-    const db = this.firebase.firestore()
-    db.collection('highscores').doc().set({
-      user: this.user.uid,
-      time: this.elapsedTime
-    })
+    if (this.user) {
+      const db = this.firebase.firestore()
+      db.collection('highscores').doc().set({
+        user: {
+          uid: this.user.uid,
+          displayName: this.user.displayName
+        },
+        time: this.elapsedTime
+      })
+    }
   }
 
   allErrorsFixed () {
