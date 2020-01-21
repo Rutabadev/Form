@@ -47,15 +47,9 @@ export default class HighscoresTable extends Vue {
     highscoresRef
       .get()
       .then((snapshot: any) => {
-        if (snapshot.empty) {
-          console.log('No matching documents')
-        }
         snapshot.forEach((doc: any) => {
           this.highscores.push({ ...doc.data(), id: doc.id })
         })
-      })
-      .catch((err: Error) => {
-        console.log('Error getting documents', err)
       })
   }
 }
