@@ -17,6 +17,7 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import firebase from 'firebase'
+import { isMobile } from 'mobile-device-detect'
 
 @Component
 export default class App extends Vue {
@@ -51,7 +52,12 @@ export default class App extends Vue {
   login () {
     if (!this.$store.state.user) {
       const provider = new firebase.auth.GoogleAuthProvider()
-      this.firebase.auth().signInWithPopup(provider)
+
+      if (isMobile) {
+        this.firebase.auth().signInWithRedirect(provider)
+      } else {
+        this.firebase.auth().signInWithPopup(provider)
+      }
     } else {
       this.firebase.auth().signOut().then(() => {
         this.$store.dispatch('removeUser')
