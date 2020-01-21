@@ -16,7 +16,8 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import firebase from 'firebase'
+import * as firebase from 'firebase/app'
+import 'firebase/auth'
 import { isMobile } from 'mobile-device-detect'
 
 @Component
