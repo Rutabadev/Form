@@ -90,11 +90,11 @@ body {
 }
 
 .google-login {
-  padding: .8rem 1rem;
+  padding: .8rem .95rem .5rem .9rem;
   margin: 2rem;
   font-size: 1.4rem;
   border: none;
-  border-radius: 6rem;
+  border-radius: 50%;
   outline: none;
   color: black;
 
