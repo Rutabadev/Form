@@ -41,7 +41,7 @@ export default class HighscoresTable extends Vue {
   }
   private highscores: Array<any> = [];
 
-  mounted () {
+  created () {
     const db = this.firebase.firestore()
     const highscoresRef = db.collection('highscores')
     highscoresRef
