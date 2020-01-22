@@ -2,9 +2,11 @@
   <div id="app">
     <router-view />
     <div>
-      <button @click="login" class="google-login">
+      <button v-if="!this.user" @click="login" class="google-login">
         <img v-if="!this.user" src="./assets/google.png" alt="Google logo">
-        {{ this.user ? this.user.displayName : '' }}
+      </button>
+      <button v-if="this.user" @click="logout" class="logout">
+        {{ this.user.displayName }}
       </button>
     </div>
     <nav>
@@ -53,19 +55,18 @@ export default class App extends Vue {
   }
 
   login () {
-    if (!this.$store.state.user) {
-      const provider = new firebase.auth.GoogleAuthProvider()
-
-      if (isMobile) {
-        this.firebase.auth().signInWithRedirect(provider)
-      } else {
-        this.firebase.auth().signInWithPopup(provider)
-      }
+    const provider = new firebase.auth.GoogleAuthProvider()
+    if (isMobile) {
+      this.firebase.auth().signInWithRedirect(provider)
     } else {
-      this.firebase.auth().signOut().then(() => {
-        this.$store.dispatch('removeUser')
-      })
+      this.firebase.auth().signInWithPopup(provider)
     }
+  }
+
+  logout () {
+    this.firebase.auth().signOut().then(() => {
+      this.$store.dispatch('removeUser')
+    })
   }
 }
 </script>
@@ -89,14 +90,15 @@ body {
   background-color: $background-dark;
 }
 
-.google-login {
-  padding: .8rem .95rem .5rem .9rem;
+button {
   margin: 2rem;
-  font-size: 1.4rem;
   border: none;
-  border-radius: 50%;
   outline: none;
-  color: black;
+}
+
+.google-login {
+  padding: .8rem .95rem .65rem .9rem;
+  border-radius: 50%;
 
   img {
     width: 50px;
@@ -110,6 +112,13 @@ body {
   &:active {
     box-shadow: 0 1px 3px black;
   }
+}
+
+.logout {
+  font-size: 1.4rem;
+  border-radius: 2rem;
+  padding: .8rem 1.2rem;
+  color: black;
 }
 
 nav {
