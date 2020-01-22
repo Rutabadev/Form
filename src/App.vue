@@ -3,7 +3,8 @@
     <router-view />
     <div>
       <button @click="login" class="google-login">
-        {{ !this.user ? 'Login with Google' : this.user.displayName }}
+        <img v-if="!this.user" src="./assets/google.png" alt="Google logo">
+        {{ this.user ? this.user.displayName : '' }}
       </button>
     </div>
     <nav>
@@ -89,13 +90,17 @@ body {
 }
 
 .google-login {
-  padding: .5rem 1rem;
+  padding: .8rem 1rem;
   margin: 2rem;
+  font-size: 1.4rem;
   border: none;
-  border-radius: 1rem;
+  border-radius: 6rem;
   outline: none;
-  color: white;
-  background-color: red;
+  color: black;
+
+  img {
+    width: 50px;
+  }
 
   &:hover {
     filter: brightness(.7);
