@@ -33,7 +33,6 @@ const rules: Array<Rule> = [
       let matches = pwd.match(regex)
       if (!matches || matches.length < 1) return false
 
-      let validStrings: Array<string> = []
       let t = Date.now()
       let validTimeStamps = [
         t - 2000,
@@ -41,8 +40,9 @@ const rules: Array<Rule> = [
         t,
         t + 1000
       ]
+      let validStrings: Array<string> = []
       validTimeStamps.forEach(timestamp => {
-        validStrings.push(new Date(timestamp).toTimeString().slice(0, 8))
+        validStrings.push(new Date(timestamp).toLocaleTimeString().slice(0, -3))
       })
 
       return validStrings.some(string => pwd.includes(string))
