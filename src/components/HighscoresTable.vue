@@ -45,6 +45,7 @@ export default class HighscoresTable extends Vue {
     const db = this.firebase.firestore()
     const highscoresRef = db.collection('highscores')
     highscoresRef
+      .orderBy('time')
       .get()
       .then((snapshot: any) => {
         snapshot.forEach((doc: any) => {
