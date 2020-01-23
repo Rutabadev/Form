@@ -55,7 +55,7 @@ export default class App extends Vue {
   }
 
   login () {
-    const provider = new firebase.auth.GoogleAuthProvider()
+    const provider = new this.firebase.auth.GoogleAuthProvider()
     if (isMobile) {
       this.firebase.auth().signInWithRedirect(provider)
     } else {
