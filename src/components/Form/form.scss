@@ -9,7 +9,7 @@
     grid-template: 1fr / 1fr 1fr;
 
     @media screen and (max-width: $break-large) {
-      grid-template: 1fr 1fr / 1fr;
+      grid-template: auto auto / 1fr;
     }
 
     & > div {
