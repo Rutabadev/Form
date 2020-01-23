@@ -2,11 +2,11 @@
   <div id="app">
     <router-view />
     <div>
-      <button v-if="!this.user" @click="login" class="google-login">
-        <img v-if="!this.user" src="./assets/google.png" alt="Google logo">
-      </button>
-      <button v-if="this.user" @click="logout" class="logout">
-        {{ this.user.displayName }}
+      <button @click="logInOrOut"
+              v-bind:class="[user ? 'logout' : 'google-login', retract ? 'retract' : '']" ref="buttonLogin"
+      >
+        <img v-if="!this.user" src="./assets/google.png" alt="Google logo" />
+        {{ this.user ? this.user.displayName : '' }}
       </button>
     </div>
     <nav>
@@ -26,6 +26,8 @@ import { isMobile } from 'mobile-device-detect'
 
 @Component
 export default class App extends Vue {
+  private retract: boolean = false;
+
   get user () {
     return this.$store.state.user
   }
@@ -50,23 +52,36 @@ export default class App extends Vue {
     this.$store.dispatch('setFirebase', firebase)
 
     this.firebase.auth().onAuthStateChanged((user: any) => {
-      this.$store.dispatch('setUser', user)
+      if (user) {
+        this.retract = true
+        setTimeout(() => {
+          this.$store.dispatch('setUser', user)
+          this.retract = false
+        }, 400)
+      }
     })
   }
 
-  login () {
+  logInOrOut () {
+    if (this.user) {
+      this.retract = true
+      setTimeout(() => {
+        this.firebase
+          .auth()
+          .signOut()
+          .then(() => {
+            this.$store.dispatch('removeUser')
+          })
+        this.retract = false
+      }, 400)
+      return
+    }
     const provider = new this.firebase.auth.GoogleAuthProvider()
     if (isMobile) {
       this.firebase.auth().signInWithRedirect(provider)
     } else {
       this.firebase.auth().signInWithPopup(provider)
     }
-  }
-
-  logout () {
-    this.firebase.auth().signOut().then(() => {
-      this.$store.dispatch('removeUser')
-    })
   }
 }
 </script>
@@ -94,18 +109,10 @@ button {
   margin: 2rem;
   border: none;
   outline: none;
-}
-
-.google-login {
-  padding: .8rem .95rem .65rem .9rem;
-  border-radius: 50%;
-
-  img {
-    width: 50px;
-  }
+  transition: transform .4s ease;
 
   &:hover {
-    filter: brightness(.7);
+    filter: brightness(0.7);
     box-shadow: 0 3px 10px black;
   }
 
@@ -114,10 +121,23 @@ button {
   }
 }
 
+.retract {
+  transform: scale(0);
+}
+
+.google-login {
+  padding: 0.8rem 0.95rem 0.65rem 0.9rem;
+  border-radius: 50%;
+
+  img {
+    width: 50px;
+  }
+}
+
 .logout {
   font-size: 1.4rem;
   border-radius: 2rem;
-  padding: .8rem 1.2rem;
+  padding: 0.8rem 1.2rem;
   color: black;
 }
 
