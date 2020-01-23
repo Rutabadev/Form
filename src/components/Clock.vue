@@ -11,7 +11,7 @@ import { Component, Vue } from 'vue-property-decorator'
   filters: {
     date: function (value: Date) {
       if (!value) return ''
-      return value.toLocaleTimeString().slice(0, -3)
+      return value.toLocaleTimeString('fr')
     }
   }
 })

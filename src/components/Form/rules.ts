@@ -42,7 +42,7 @@ const rules: Array<Rule> = [
       ]
       let validStrings: Array<string> = []
       validTimeStamps.forEach(timestamp => {
-        validStrings.push(new Date(timestamp).toLocaleTimeString().slice(0, -3))
+        validStrings.push(new Date(timestamp).toLocaleTimeString('fr'))
       })
 
       return validStrings.some(string => pwd.includes(string))
