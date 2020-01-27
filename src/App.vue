@@ -3,10 +3,11 @@
     <router-view />
     <div>
       <button @click="logInOrOut"
-              v-bind:class="[user ? 'logout' : 'google-login', retract ? 'retract' : '']" ref="buttonLogin"
+              v-bind:class="['login-logout', retract ? 'retract' : '']"
+              ref="buttonLogin"
       >
         <img v-if="!this.user" src="./assets/google.png" alt="Google logo" />
-        {{ this.user ? this.user.displayName : '' }}
+        <img v-if="this.user" :src="user.photoURL" alt="User logo" />
       </button>
     </div>
     <nav>
@@ -125,20 +126,13 @@ button {
   transform: scale(0);
 }
 
-.google-login {
+.login-logout {
   padding: 0.8rem 0.95rem 0.65rem 0.9rem;
   border-radius: 50%;
 
   img {
     width: 50px;
   }
-}
-
-.logout {
-  font-size: 1.4rem;
-  border-radius: 2rem;
-  padding: 0.8rem 1.2rem;
-  color: black;
 }
 
 nav {
