@@ -12,18 +12,13 @@ interface FormError {
     time: function (value: number) {
       if (!value) return '0s'
       let seconds = Math.round(value / 1000)
-      if (seconds < 60) {
-        return `${seconds}s`
-      }
-      if (seconds < 3600) {
-        let minutes = Math.round(seconds / 60)
-        seconds = seconds % 60
-        return `${minutes}m${seconds}s`
-      }
-      let hours = Math.round(seconds / 3600)
-      let minutes = Math.round((seconds % 3600) / 60)
-      seconds = seconds % 60
-      return `${hours}h${minutes}m${seconds}s`
+      if (seconds < 60) return `${seconds}s`
+      let minutes = Math.trunc(seconds / 60)
+      seconds %= 60
+      if (minutes < 60) return `${minutes}min ${seconds}s`
+      const hours = Math.trunc(minutes / 60)
+      minutes %= 60
+      return `${hours}h ${minutes}min ${seconds}s`
     }
   },
   components: {
@@ -73,12 +68,12 @@ export default class Form extends Vue {
 
   validateForm (username: string, password: string): void {
     Array.from(this.errorsMemory.keys()).forEach(key => {
-      let rule = rules[key]
+      const rule = rules[key]
       this.errorsMemory.set(key, { message: rule.message, fixed: rule.check(username, password) })
     })
 
     if (this.allErrorsFixed()) {
-      let nextInvalidRuleIndex = this.rules.findIndex(rule => !rule.check(username, password))
+      const nextInvalidRuleIndex = this.rules.findIndex(rule => !rule.check(username, password))
       if (nextInvalidRuleIndex !== -1) {
         this.errorsMemory.set(nextInvalidRuleIndex, { message: rules[nextInvalidRuleIndex].message, fixed: false })
       }

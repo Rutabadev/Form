@@ -26,11 +26,11 @@ import { Component, Vue } from 'vue-property-decorator'
       if (!value) return '0s'
       let seconds = Math.round(value / 1000)
       if (seconds < 60) return `${seconds}s`
-
-      let minutes = Math.round(seconds / 60)
-      seconds = seconds % 60
+      let minutes = Math.trunc(seconds / 60)
+      seconds %= 60
       if (minutes < 60) return `${minutes}min ${seconds}s`
-      let hours = Math.round(minutes / 60)
+      const hours = Math.trunc(minutes / 60)
+      minutes %= 60
       return `${hours}h ${minutes}min ${seconds}s`
     }
   }

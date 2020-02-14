@@ -29,18 +29,18 @@ const rules: Array<Rule> = [
   {
     message: 'Password must contain current time like hh:mm:ss',
     check: (usr, pwd) => {
-      let regex = new RegExp(/..:..:../)
-      let matches = pwd.match(regex)
+      const regex = new RegExp(/..:..:../)
+      const matches = pwd.match(regex)
       if (!matches || matches.length < 1) return false
 
-      let t = Date.now()
-      let validTimeStamps = [
+      const t = Date.now()
+      const validTimeStamps = [
         t - 2000,
         t - 1000,
         t,
         t + 1000
       ]
-      let validStrings: Array<string> = []
+      const validStrings: Array<string> = []
       validTimeStamps.forEach(timestamp => {
         validStrings.push(new Date(timestamp).toLocaleTimeString('fr'))
       })
@@ -60,8 +60,8 @@ const rules: Array<Rule> = [
 ]
 
 function randomChar (): Rule {
-  let chars = ['$', '☺', '%', '*', 'É', '♥']
-  let char = chars[Math.round(Math.random() * 5)]
+  const chars = ['$', '☺', '%', '*', 'É', '♥']
+  const char = chars[Math.round(Math.random() * 5)]
   return {
     message: `Password must include ${char}`,
     check: (usr, pwd) => pwd.includes(char)
@@ -69,7 +69,7 @@ function randomChar (): Rule {
 }
 
 function randomMinLength (): Rule {
-  let minLength = Math.round(Math.random() * 3 + 15)
+  const minLength = Math.round(Math.random() * 3 + 15)
   return {
     message: `Password must be more than ${minLength} characters`,
     check: (usr, pwd) => pwd.length > minLength
@@ -77,7 +77,7 @@ function randomMinLength (): Rule {
 }
 
 function randomMaxLength (): Rule {
-  let maxLength = Math.round(Math.random() * 3 + 20)
+  const maxLength = Math.round(Math.random() * 3 + 20)
   return {
     message: `Password must be less than ${maxLength} characters`,
     check: (usr, pwd) => pwd.length < maxLength
@@ -85,7 +85,7 @@ function randomMaxLength (): Rule {
 }
 
 function randomCharNumberIsK () : Rule {
-  let charNumber = Math.round(Math.random() * 5 + 7)
+  const charNumber = Math.round(Math.random() * 5 + 7)
   return {
     message: `Password character number ${charNumber} must be K`,
     check: (usr, pwd) => pwd[charNumber - 1] === 'K'
