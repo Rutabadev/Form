@@ -69,6 +69,7 @@ export default class HighscoresTable extends Vue {
     border:solid white 1px;
     border-radius:6px;
     background: linear-gradient(to right, $primary, $secondary);
+    box-shadow: 0 3px 10px black;
   }
 
   td, th {
