@@ -3,6 +3,15 @@ $primary: #11998e;
 $secondary: #38ef7d;
 $background: rgb(63, 72, 121);
 $background-light: rgb(101, 113, 180);
-$background-dark: rgb(33, 38, 66);
 $white: #fff;
 $gray: #9b9b9b;
+
+:root {
+    --background-dark: rgb(33, 38, 66);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --background-dark: rgb(18, 19, 26);
+    }
+}

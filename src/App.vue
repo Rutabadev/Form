@@ -103,7 +103,7 @@ body {
   grid-template: 1fr auto auto / 1fr;
   min-height: 100vh;
   color: white;
-  background-color: $background-dark;
+  background-color: var(--background-dark);
 }
 
 button {
